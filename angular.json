@@ -102,5 +102,7 @@
       }
     }
   },
-  "defaultProject": "fullcalendario"
+  "cli": {
+    "analytics": "f469e1bf-71c4-4a99-ab59-5d9d6ec4de17"
+  }
 }
