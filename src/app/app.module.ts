@@ -5,6 +5,9 @@ import { AppComponent } from './app.component';
 import { CalendarnewComponent } from './fullcalendar/calendarnew/calendarnew.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import 'web-component-essentials';
+import { PrimeNgModule } from './prime-ng/pirme-ng.module';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -12,7 +15,10 @@ import 'web-component-essentials';
     CalendarnewComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    PrimeNgModule,
+    BrowserAnimationsModule
+
   ],
   providers: [],
   bootstrap: [AppComponent],
