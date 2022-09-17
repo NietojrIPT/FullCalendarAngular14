@@ -26,6 +26,14 @@ export class CalendarnewComponent implements OnInit {
     { title: 'Clase A1.2', date: '2022-09-16', color: '#601142' },
     { title: 'Clase A1.1', date: '2022-09-15', color: '#173d23' },
     { title: 'Clase B1', date: '2022-09-12', color: '#5b6011' },
+    { title: 'Clase A2', start: '2022-09-07', backgroundColor: 'green', borderColor: 'red'},
+    {
+      title: 'Club Conversacional',
+      start: '2022-09-01',
+      extendedProps: {
+        status: 'done'
+      }
+    }
   ];
   
   currentEvents: EventApi[] = [];
@@ -34,17 +42,9 @@ export class CalendarnewComponent implements OnInit {
   open = false;
   start: any;
 
-  //  Modificación de propiedades
-  // calendarOptions: CalendarOptions = {
-  //   plugins: [dayGridPlugin],
-  //   weekends: false, // initial value
-  //   events: this.events,
-  //   eventClick: this.showBasicDialog.bind(this),
-  // };
-
   calendarOptions: CalendarOptions = {
     headerToolbar: {
-      left: 'prev,next today timeGridDay',
+      left: 'prev,next today',
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
@@ -54,7 +54,7 @@ export class CalendarnewComponent implements OnInit {
     weekends: false,
     editable: true,
     selectable: true,
-    selectMirror: true,
+    selectMirror: false,
     dayMaxEvents: true,
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
