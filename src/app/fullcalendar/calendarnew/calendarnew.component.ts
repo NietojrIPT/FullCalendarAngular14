@@ -5,9 +5,10 @@ import {
   FullCalendarElement,EventClickArg,DateSelectArg,EventApi
 } from '@fullcalendar/web-component';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { formatDate } from '@fullcalendar/core';
+import { formatDate, Calendar } from '@fullcalendar/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { INITIAL_EVENTS, createEventId } from './event-utils';
+import googleCalendarPlugin from '@fullcalendar/google-calendar';
 // make the <full-calendar> element globally available by calling this function at the top-level
 defineFullCalendarElement();
 
@@ -35,7 +36,8 @@ export class CalendarnewComponent implements OnInit {
       }
     }
   ];
-  
+
+
   currentEvents: EventApi[] = [];
   calendarVisible = true;
   displayBasic: boolean = false;
@@ -59,12 +61,12 @@ export class CalendarnewComponent implements OnInit {
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this),
-    // eventAdd: 
+    // eventAdd:
     /* you can update a remote database when these fire:
     eventChange:
     eventRemove:
     */
-    events: this.events,
+    events: this.events
   };
 
   constructor(private primengConfig: PrimeNGConfig) {}
@@ -88,6 +90,10 @@ export class CalendarnewComponent implements OnInit {
     console.log('Clase A1.1: ' + this.presentDays);
     console.log('Clase A1.2: ' + this.absentDays);
     console.log('Clase B1: ' + this.absentDays);
+
+
+
+
   }
 
   toggleWeekends() {
@@ -116,7 +122,7 @@ export class CalendarnewComponent implements OnInit {
 
   handleDateSelect(selectInfo: DateSelectArg) {
     console.log('selectInfo');
-    
+
     const title = prompt('Please enter a new title for your event');
     const calendarApi = selectInfo.view.calendar;
 
