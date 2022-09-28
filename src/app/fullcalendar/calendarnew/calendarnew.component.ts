@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  CalendarOptions,
-  defineFullCalendarElement,
-  FullCalendarElement,EventClickArg,DateSelectArg,EventApi
-} from '@fullcalendar/web-component';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { CalendarOptions, defineFullCalendarElement, FullCalendarElement,EventClickArg,DateSelectArg,EventApi} from '@fullcalendar/web-component';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent,CalendarView} from 'angular-calendar';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { formatDate, Calendar } from '@fullcalendar/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { INITIAL_EVENTS, createEventId } from './event-utils';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours} from 'date-fns';
 import googleCalendarPlugin from '@fullcalendar/google-calendar';
-// make the <full-calendar> element globally available by calling this function at the top-level
 defineFullCalendarElement();
 
 @Component({
@@ -18,6 +15,24 @@ defineFullCalendarElement();
   styleUrls: ['./calendarnew.component.css'],
 })
 export class CalendarnewComponent implements OnInit {
+
+  @ViewChild('modalContent', { static: true })
+  modalContent!: TemplateRef<any>;
+
+  view: CalendarView = CalendarView.Month;
+
+  CalendarView = CalendarView;
+
+  viewDate: Date = new Date();
+
+  currentDate: any;
+
+
+  modalData: {
+    action: string;
+    event: CalendarEvent;
+  } | undefined;
+  
   titleevent: string = '';
   presentDays: number = 0;
   absentDays: number = 0;
@@ -28,12 +43,24 @@ export class CalendarnewComponent implements OnInit {
     { title: 'Clase A1.1', date: '2022-09-15', color: '#173d23' },
     { title: 'Clase B1', date: '2022-09-12', color: '#5b6011' },
     { title: 'Clase A2', start: '2022-09-07', backgroundColor: 'green', borderColor: 'red'},
-    {
-      title: 'Club Conversacional',
-      start: '2022-09-01',
+    { title: 'Clase A2', start: '2022-09-07', backgroundColor: 'red', borderColor: 'red', dayGridPlugin: true},
+
+    {title: 'Club Conversacional', start: '2022-09-02',  end: '2022-09-04',
       extendedProps: {
-        status: 'done'
+        status: 'dobe'
       }
+    },
+
+    {
+      start: subDays(startOfDay(new Date()), 2),
+      end: addDays(new Date(), 2),
+      title: 'A 3 day event',
+      allDay: true,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
+      },
+      draggable: true,
     }
   ];
 
@@ -48,19 +75,24 @@ export class CalendarnewComponent implements OnInit {
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      // right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek', 
+      right: 'dayGridMonth,dayGridWeek,dayGrid', 
+
     },
     plugins: [dayGridPlugin],
+    
     initialView: 'dayGridMonth',
     initialEvents: INITIAL_EVENTS,
-    weekends: false,
+    weekends: true,
     editable: true,
     selectable: true,
-    selectMirror: false,
+    selectMirror: true,
     dayMaxEvents: true,
-    select: this.handleDateSelect.bind(this),
+    // select: this.handleDateSelect.bind(this),
+    select: this.prueba.bind('hola'),
+
     eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this),
+    eventsSet: this.handleEvents.bind(this.events),
     // eventAdd:
     /* you can update a remote database when these fire:
     eventChange:
@@ -79,7 +111,7 @@ export class CalendarnewComponent implements OnInit {
     });
     console.log('la fecha de hoy es ' + str);
 
-    //ver eventos
+    //ver eventos cuantos eventos hay 
     this.events.forEach((e: { [x: string]: string }) => {
       if (e['title'] == 'Clase A1.1') {
         this.presentDays++;
@@ -90,14 +122,11 @@ export class CalendarnewComponent implements OnInit {
     console.log('Clase A1.1: ' + this.presentDays);
     console.log('Clase A1.2: ' + this.absentDays);
     console.log('Clase B1: ' + this.absentDays);
-
-
-
-
   }
 
+
+
   toggleWeekends() {
-    // make a copy while overriding some values
     this.calendarOptions = {
       ...this.calendarOptions,
       weekends: !this.calendarOptions.weekends,
@@ -115,13 +144,18 @@ export class CalendarnewComponent implements OnInit {
     this.calendarVisible = !this.calendarVisible;
   }
 
+  prueba(evnt: any){
+    console.log(evnt);
+    
+  }
+
   handleWeekendsToggle() {
     const { calendarOptions } = this;
     calendarOptions.weekends = !calendarOptions.weekends;
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    console.log('selectInfo');
+    console.log(selectInfo);
 
     const title = prompt('Please enter a new title for your event');
     const calendarApi = selectInfo.view.calendar;
@@ -140,12 +174,34 @@ export class CalendarnewComponent implements OnInit {
   }
 
   handleEventClick(clickInfo: EventClickArg) {
+    console.log(clickInfo);
+    
     if (confirm(`¿Estás seguro de que quieres eliminar el evento? '${clickInfo.event.title}'`)) {
       clickInfo.event.remove();
     }
   }
 
+  eventTimesChanged({
+    event,
+    newStart,
+    newEnd,
+  }: CalendarEventTimesChangedEvent): void {
+    this.events = this.events.map((iEvent: CalendarEvent<any>) => {
+      if (iEvent === event) {
+        return {
+          ...event,
+          start: newStart,
+          end: newEnd,
+        };
+      }
+      return iEvent;
+    });
+  }
+
   handleEvents(events: EventApi[]) {
+    console.log('EventSet '+events);
+
+    
     this.currentEvents = events;
   }
 }
