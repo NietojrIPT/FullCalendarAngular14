@@ -7,6 +7,8 @@ import { PrimeNGConfig } from 'primeng/api';
 import { INITIAL_EVENTS, createEventId } from './event-utils';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours} from 'date-fns';
 import googleCalendarPlugin from '@fullcalendar/google-calendar';
+import { GoogleEventsRq } from 'src/app/core/models/google-event.model';
+import { CalendarService } from 'src/app/core/services/calendar.service';
 defineFullCalendarElement();
 
 @Component({
@@ -20,6 +22,8 @@ export class CalendarnewComponent implements OnInit {
   modalContent!: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
+
+  eventGoogleCalendar: GoogleEventsRq[] = [];
 
   CalendarView = CalendarView;
 
@@ -101,9 +105,12 @@ export class CalendarnewComponent implements OnInit {
     events: this.events
   };
 
-  constructor(private primengConfig: PrimeNGConfig) {}
+  constructor(private primengConfig: PrimeNGConfig, private calendarService:CalendarService) {}
 
   ngOnInit(): void {
+
+    this.eventByIdCalendar('nietojr1@gmail.com');
+
     let str = formatDate(new Date(), {
       month: 'long',
       year: 'numeric',
@@ -122,6 +129,14 @@ export class CalendarnewComponent implements OnInit {
     console.log('Clase A1.1: ' + this.presentDays);
     console.log('Clase A1.2: ' + this.absentDays);
     console.log('Clase B1: ' + this.absentDays);
+  }
+
+  eventByIdCalendar(idCalndar: string) {
+    this.calendarService.getEventByIdCalendar(idCalndar).subscribe((response) => {
+      console.log(response);
+      
+      // this.eventGoogleCalendar = response;
+      });
   }
 
 

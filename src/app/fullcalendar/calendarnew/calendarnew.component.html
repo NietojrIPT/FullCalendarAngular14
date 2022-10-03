@@ -1,20 +1,5 @@
-<!-- <full-calendar [options]="calendarOptions"></full-calendar>
-
-<p-button label="FDS" (click)="toggleWeekends()"></p-button>
-
-<p-dialog header="Evento" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000">
-    <p> {{titleevent}} on {{start | date}}</p>
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="displayBasic=false" label="Ok" styleClass="p-button-text"></p-button>
-    </ng-template>
-</p-dialog> -->
-
-
-
 <div class='demo-app'>
-
     <div class='demo-app-sidebar'>
-
       <div class='demo-app-sidebar-section'>
         <p-button label="Calendar Visible" (click)="handleCalendarToggle()"></p-button>
       </div>
@@ -31,14 +16,10 @@
         </ul>
       </div>
     </div>
-
     <div class='demo-app-main'>
       <full-calendar
         *ngIf='calendarVisible'
         [options]='calendarOptions'
       ></full-calendar>
     </div>
-
-
-
   </div>

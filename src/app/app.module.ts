@@ -7,6 +7,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import 'web-component-essentials';
 import { PrimeNgModule } from './prime-ng/pirme-ng.module';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -17,10 +18,11 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
   imports: [
     BrowserModule,
     PrimeNgModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
 
   ],
-  providers: [],
+  providers: [HttpClient],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
