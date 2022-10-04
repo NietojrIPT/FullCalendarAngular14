@@ -54,3 +54,31 @@ export interface dateTimeFull {
 export interface Reminders {
     useDefault: boolean;
 }
+
+export interface GoogleEvent2Rq {
+    nameCalendar:     null | string;
+    title:            string;
+    descriptionEvent: null | string;
+    locationEvent:    null | string;
+    dateCreation:     Date;
+    colorEvent:       null | string;
+    start:            Date;
+    end:              Date;
+}
+
+export interface GoogleEventRq {
+    title:           string;
+    start:           string;
+    end:             string;
+    backgroundColor: string;
+    borderColor:     string;
+    extendedProps:   ExtendedProps;
+}
+
+export interface ExtendedProps {
+    nameCalendar:     string;
+    descriptionEvent: string;
+    colorEvent:       number;
+    locationEvent:    string;
+    dateCreation:     string;
+}

@@ -7,7 +7,7 @@ import { PrimeNGConfig } from 'primeng/api';
 import { INITIAL_EVENTS, createEventId } from './event-utils';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours} from 'date-fns';
 import googleCalendarPlugin from '@fullcalendar/google-calendar';
-import { GoogleEventsRq } from 'src/app/core/models/google-event.model';
+import { GoogleEventRq } from 'src/app/core/models/google-event.model';
 import { CalendarService } from 'src/app/core/services/calendar.service';
 defineFullCalendarElement();
 
@@ -23,7 +23,7 @@ export class CalendarnewComponent implements OnInit {
 
   view: CalendarView = CalendarView.Month;
 
-  eventGoogleCalendar: GoogleEventsRq[] = [];
+  eventGoogleCalendar: GoogleEventRq[] = [];
 
   CalendarView = CalendarView;
 
@@ -40,33 +40,19 @@ export class CalendarnewComponent implements OnInit {
   titleevent: string = '';
   presentDays: number = 0;
   absentDays: number = 0;
-  events: any = [
-    { title: 'Clase A1.1', date: '2022-09-16', color: '#173d23' },
-    { title: 'Clase B1', date: '2022-09-19', color: '#5b6011' },
-    { title: 'Clase A1.2', date: '2022-09-16', color: '#601142' },
-    { title: 'Clase A1.1', date: '2022-09-15', color: '#173d23' },
-    { title: 'Clase B1', date: '2022-09-12', color: '#5b6011' },
-    { title: 'Clase A2', start: '2022-09-07', backgroundColor: 'green', borderColor: 'red'},
-    { title: 'Clase A2', start: '2022-09-07', backgroundColor: 'red', borderColor: 'red', dayGridPlugin: true},
-
-    {title: 'Club Conversacional', start: '2022-09-02',  end: '2022-09-04',
-      extendedProps: {
-        status: 'dobe'
-      }
-    },
-
-    {
-      start: subDays(startOfDay(new Date()), 2),
-      end: addDays(new Date(), 2),
-      title: 'A 3 day event',
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    }
+  eventos: GoogleEventRq []= [
+    // {title: 'Club Conversacional', start: '2022-10-07',  end: '2022-10-09', backgroundColor: '#5b6011', borderColor: '#0b0047',
+    // extendedProps: {
+    //   nameCalendar: 'dato adicional',
+    //   descriptionEvent: 'hola mundoooooooo',
+    //   colorEvent: 6,
+    //   locationEvent: 'Salon',
+    //   dateCreation: "2018-03-02T18:49:31.000Z"
+    //   }
+    // }
   ];
+
+  
 
 
   currentEvents: EventApi[] = [];
@@ -79,35 +65,35 @@ export class CalendarnewComponent implements OnInit {
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      // right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek', 
       right: 'dayGridMonth,dayGridWeek,dayGrid', 
 
     },
     plugins: [dayGridPlugin],
     
     initialView: 'dayGridMonth',
-    initialEvents: INITIAL_EVENTS,
+    // initialEvents: INITIAL_EVENTS,
     weekends: true,
     editable: true,
-    selectable: true,
-    selectMirror: true,
-    dayMaxEvents: true,
+    selectable: false,
+    selectMirror: false,
+    dayMaxEvents: false,
     // select: this.handleDateSelect.bind(this),
     select: this.prueba.bind('hola'),
 
     eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this.events),
+    // eventsSet: this.handleEvents.bind(this.events),
     // eventAdd:
     /* you can update a remote database when these fire:
     eventChange:
     eventRemove:
     */
-    events: this.events
+    events: this.eventos
   };
 
   constructor(private primengConfig: PrimeNGConfig, private calendarService:CalendarService) {}
 
   ngOnInit(): void {
+    
 
     this.eventByIdCalendar('nietojr1@gmail.com');
 
@@ -119,24 +105,53 @@ export class CalendarnewComponent implements OnInit {
     console.log('la fecha de hoy es ' + str);
 
     //ver eventos cuantos eventos hay 
-    this.events.forEach((e: { [x: string]: string }) => {
-      if (e['title'] == 'Clase A1.1') {
-        this.presentDays++;
-      } else if (e['title'] == 'Clase A1.2') {
-        this.absentDays++;
-      }
-    });
+    // this.events.forEach((e: { [x: string]: string }) => {
+    //   if (e['title'] == 'Clase A1.1') {
+    //     this.presentDays++;
+    //   } else if (e['title'] == 'Clase A1.2') {
+    //     this.absentDays++;
+    //   }
+    // });
     console.log('Clase A1.1: ' + this.presentDays);
     console.log('Clase A1.2: ' + this.absentDays);
     console.log('Clase B1: ' + this.absentDays);
   }
 
   eventByIdCalendar(idCalndar: string) {
+   let evet:GoogleEventRq[]=[];
     this.calendarService.getEventByIdCalendar(idCalndar).subscribe((response) => {
-      console.log(response);
+      evet=response;
       
-      // this.eventGoogleCalendar = response;
       });
+      let evento:GoogleEventRq ={
+        title: '',
+        start: '',
+        end: '',
+        backgroundColor: '',
+        borderColor: '',
+        extendedProps: {
+          nameCalendar: 'dato adicional',
+          descriptionEvent: 'hola mundoooooooo',
+          colorEvent: 6,
+          locationEvent: 'Salon',
+          dateCreation: "2018-03-02T18:49:31.000Z"
+          }
+      }
+      
+      for (let i = 0; i < evet.length; i++) {
+       evento.title = evet[i].title;
+       evento.start = evet[i].start;
+       evento.end   = evet[i].end;
+       evento.extendedProps.nameCalendar     == evet[i].nameCalendar;
+       evento.extendedProps.descriptionEvent == evet[i].descriptionEvent;
+       evento.extendedProps.colorEvent       == evet[i].colorEvent;
+       evento.extendedProps.locationEvent    == evet[i].locationEvent;
+       evento.extendedProps.dateCreation     == evet[i].dateCreation;
+      
+       console.log(evento);
+       
+      }
+
   }
 
 
@@ -161,7 +176,10 @@ export class CalendarnewComponent implements OnInit {
 
   prueba(evnt: any){
     console.log(evnt);
-    
+  }
+
+  nextYear(){
+
   }
 
   handleWeekendsToggle() {
@@ -196,22 +214,22 @@ export class CalendarnewComponent implements OnInit {
     }
   }
 
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent: CalendarEvent<any>) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-  }
+  // eventTimesChanged({
+  //   event,
+  //   newStart,
+  //   newEnd,
+  // }: CalendarEventTimesChangedEvent): void {
+  //   this.events = this.events.map((iEvent: CalendarEvent<any>) => {
+  //     if (iEvent === event) {
+  //       return {
+  //         ...event,
+  //         start: newStart,
+  //         end: newEnd,
+  //       };
+  //     }
+  //     return iEvent;
+  //   });
+  // }
 
   handleEvents(events: EventApi[]) {
     console.log('EventSet '+events);
