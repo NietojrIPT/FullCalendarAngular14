@@ -118,11 +118,11 @@ export class CalendarnewComponent implements OnInit {
   }
 
   eventByIdCalendar(idCalndar: string) {
-   let evet:GoogleEventRq[]=[];
+   let evet:any[]=[];
     this.calendarService.getEventByIdCalendar(idCalndar).subscribe((response) => {
       evet=response;
-      
-      });
+      console.log(evet);
+
       let evento:GoogleEventRq ={
         title: '',
         start: '',
@@ -148,9 +148,13 @@ export class CalendarnewComponent implements OnInit {
        evento.extendedProps.locationEvent    == evet[i].locationEvent;
        evento.extendedProps.dateCreation     == evet[i].dateCreation;
       
-       console.log(evento);
+       this.eventos.push(evento);
+       console.log(this.eventos);
        
       }
+      });
+
+      
 
   }
 
