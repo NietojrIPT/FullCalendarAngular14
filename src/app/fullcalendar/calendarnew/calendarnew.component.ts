@@ -40,6 +40,14 @@ defineFullCalendarElement();
 })
 export class CalendarnewComponent implements OnInit {
 
+  eventsToFollow?: any;
+
+  refreshModal: boolean = true;
+
+  modalVisible: boolean = false;
+
+  modalTitle: string = '';
+
   view: CalendarView = CalendarView.Month;
 
   eventGoogleCalendar: GoogleEventRq[] = [];
@@ -138,13 +146,15 @@ export class CalendarnewComponent implements OnInit {
       selectMirror: false,
       dayMaxEvents: false,
       select: this.handleDateSelect.bind(this),
-      eventClick: this.handleEventClick.bind(this),
+      // eventClick: this.handleEventClick.bind(this),
+      eventClick: this.viewEvent.bind(this),
       eventsSet: this.handleEvents.bind(this),
       // eventAdd:
       /* you can update a remote database when these fire:
       eventChange:
       eventRemove:
       */
+      locale: 'es',
       events: this.eventos,
     };
   }
@@ -166,6 +176,8 @@ export class CalendarnewComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
+    console.log('date select');
+    
     const title = prompt('Please enter a new title for your event');
     const calendarApi = selectInfo.view.calendar;
 
@@ -196,5 +208,17 @@ export class CalendarnewComponent implements OnInit {
   handleEvents(events: EventApi[]) {
     console.log('EventSet ' + events);
     this.currentEvents = events;
+  }
+
+
+  closeModal(event: boolean) {
+    this.modalVisible = event;
+  }
+
+  viewEvent(evnt: any){
+    this.eventsToFollow = evnt;
+    this.refreshModal = false;
+    this.modalVisible = true;
+    this.modalTitle = 'Datos del Evento '
   }
 }

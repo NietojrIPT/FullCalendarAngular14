@@ -1,14 +1,9 @@
 <div class='demo-app'>
     <div class='demo-app-sidebar'>
-      <div class='demo-app-sidebar-section'>
-        <p-button label="Calendar Visible" (click)="handleCalendarToggle()"></p-button>
-      </div>
-      <div class='demo-app-sidebar-section'>
+      <div class='demo-app-sidebar-section2'>
+        <p-button label="CV" (click)="handleCalendarToggle()"></p-button>
         <p-button label="FDS" (click)="toggleWeekends()"></p-button>
-      </div>
-
-      <div class='demo-app-sidebar-section'>
-        <p-button label="consultar rq" (click)="eventByDayTime()"></p-button>
+        <p-button label="CRQ" (click)="eventByDayTime()"></p-button>
       </div>
       <div class='demo-app-sidebar-section'>
         <h2>Todos los Eventos ({{currentEvents.length}})</h2>
@@ -27,4 +22,14 @@
         [options]='calendarOptions'
       ></full-calendar>
     </div>
+  </div>
+
+
+  <div *ngIf="!refreshModal" class="modal-container">
+    <app-admin-events
+    [dataStudent]="eventsToFollow!"
+    [visible]="modalVisible"
+    [modalTitle]="modalTitle"
+    (closeMod)="closeModal($event)"
+    ></app-admin-events>
   </div>

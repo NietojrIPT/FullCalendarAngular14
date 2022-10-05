@@ -8,12 +8,14 @@ import 'web-component-essentials';
 import { PrimeNgModule } from './prime-ng/pirme-ng.module';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AdminEventsComponent } from './fullcalendar/admin-events/admin-events.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CalendarnewComponent
+    CalendarnewComponent,
+    AdminEventsComponent,
   ],
   imports: [
     BrowserModule,
