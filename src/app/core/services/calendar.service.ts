@@ -20,8 +20,8 @@ export class CalendarService {
     return this.http.get(serviceUrl);
   }
 
-  getEventByDayTime(params: eventqueryRq): Observable<any> {
-    let serviceUrl = this.SERVICE_URL + 'get/event/calendar/idcalendar/by/datetiem';
+  postEventByDayTime(params: eventqueryRq): Observable<any> {
+    let serviceUrl = this.SERVICE_URL + 'post/event/calendar/idcalendar/by/datetime';
     this.generateRequestParams(params);
     return this.http.post(serviceUrl, this.httpOptions);
   }

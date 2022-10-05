@@ -67,18 +67,15 @@ export interface GoogleEvent2Rq {
 }
 
 export interface GoogleEventRq {
-    title:           string;
-    start:           string;
-    end:             string;
-    backgroundColor: string;
-    borderColor:     string;
-    extendedProps:   ExtendedProps;
-}
-
-export interface ExtendedProps {
+    title:            string;
+    start:            string;
+    end:              string;
+    backgroundColor:  string;
+    borderColor:      string;
     nameCalendar:     string;
     descriptionEvent: string;
     colorEvent:       number;
     locationEvent:    string;
     dateCreation:     string;
 }
+
