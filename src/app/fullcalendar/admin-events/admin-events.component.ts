@@ -11,11 +11,11 @@ export class AdminEventsComponent implements OnInit {
   @Input() modalTitle!: string;
   @Output() closeMod = new EventEmitter<boolean>();
 
-  eventsFrom!: FormGroup;
+  eventsForm!: FormGroup;
 
   constructor(fb: FormBuilder) { 
-    this.eventsFrom = fb.group({
-      title:            [{ value: '', disabled: true }],
+    this.eventsForm = fb.group({
+      title:            ['ggdfgdfgdfg' ],
       descriptionEvent: [{ value: '', disabled: true }],
       locationEvent:    [{ value: '', disabled: true }],
       start:            [{ value: '', disabled: true }],
@@ -25,13 +25,14 @@ export class AdminEventsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.eventsForm.controls['title'].setValue('hola mundo');
   }
 
   closeModal(){
     this.closeMod.emit(false);
     this.visible = false;
   }
-
+  
   sendForm(form: FormGroup) {
   }
 

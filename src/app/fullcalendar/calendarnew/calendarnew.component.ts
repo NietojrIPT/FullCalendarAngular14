@@ -219,6 +219,6 @@ export class CalendarnewComponent implements OnInit {
     this.eventsToFollow = evnt;
     this.refreshModal = false;
     this.modalVisible = true;
-    this.modalTitle = 'Datos del Evento '
+    this.modalTitle = 'Datos del Evento'
   }
 }

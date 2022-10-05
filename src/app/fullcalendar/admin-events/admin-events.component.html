@@ -6,39 +6,41 @@ header="{{ modalTitle }}"
 styleClass="p-fluid"
 (onHide)="closeModal()"
 >
-<ng-template pTemplate="obsContact">
+<ng-template pTemplate="eventDate">
   <hr />
-  <form (ngSubmit)="sendForm(eventsFrom)">
+  <form (ngSubmit)="sendForm(eventsForm)" [formGroup]="eventsForm">
     <div class="dataContact">
      <ipt-input
         [inputType]="'text'"
         [placeHolder]="'Nombre'"
-        [control]="eventsFrom.controls['title']"
+        [control]="eventsForm.controls['title']"
      ></ipt-input>
      <ipt-input
         [inputType]="'text'"
         [placeHolder]="'Descripcción'"
-        [control]="eventsFrom.controls['descriptionEvent']"
+        [control]="eventsForm.controls['descriptionEvent']"
      ></ipt-input>
      <ipt-input
         [inputType]="'text'"
         [placeHolder]="'Lugar'"
-        [control]="eventsFrom.controls['locationEvent']"
+        [control]="eventsForm.controls['locationEvent']"
      ></ipt-input>
      <ipt-input
         [inputType]="'text'"
         [placeHolder]="'Inicia'"
-        [control]="eventsFrom.controls['start']"
+        [control]="eventsForm.controls['start']"
      ></ipt-input>
+
+     
      <ipt-input
         [inputType]="'text'"
         [placeHolder]="'Finaliza'"
-        [control]="eventsFrom.controls['end']"
+        [control]="eventsForm.controls['end']"
      ></ipt-input>
      <ipt-input
         [inputType]="'text'"
         [placeHolder]="'Color'"
-        [control]="eventsFrom.controls['colorEvent']"
+        [control]="eventsForm.controls['colorEvent']"
      ></ipt-input>
     </div>
     <div class="tabObservation">
